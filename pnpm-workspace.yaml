@@ -1,0 +1,10 @@
+allowBuilds:
+  '@clerk/shared': true
+  '@tailwindcss/oxide': true
+  better-sqlite3: true
+  esbuild: true
+  sharp: true
+  unrs-resolver: true
+minimumReleaseAgeExclude:
+  - '@clerk/nextjs@7.9.1'
+  - '@clerk/react@6.15.1'

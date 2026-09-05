@@ -1,0 +1,147 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{fancyvrb}
+\usepackage{bookmark}
+
+% ── DESIGN TOKENS ─────────────────────────────────────────────────────────────
+\definecolor{primaryblue}{HTML}{0071e3}
+\definecolor{darkbg}{HTML}{050508}
+\definecolor{accentpurple}{HTML}{bf5af2}
+\definecolor{successgreen}{HTML}{30d158}
+
+\geometry{margin=0.85in}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primaryblue,
+    filecolor=magenta,      
+    urlcolor=primaryblue,
+}
+
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    frame=single,
+    backgroundcolor=\color{gray!2},
+    keywordstyle=\color{primaryblue}\bfseries,
+    commentstyle=\color{gray},
+    stringstyle=\color{successgreen},
+    showstringspaces=false
+}
+
+\titleformat{\section}{\Large\bfseries\color{primaryblue}}{\thesection}{1em}{}[{\titlerule[0.5pt]}]
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
+
+\title{\textbf{SEO Insight: Master Technical Documentation}}
+\author{\textbf{Aditya} (Lead Developer) \& \textbf{Antigravity AI}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{abstract}
+    This document serves as the comprehensive technical manual for SEO Insight, a high-performance, local-first SEO intelligence platform. It covers the architectural design, AI integration strategies, professional UI systems, and the roadmap for commercial scalability.
+\end{abstract}
+
+\newpage
+\tableofcontents
+\newpage
+
+% ── Section 1: Overview ──────────────────────────────────────────────
+\section{Project Definition \& Philosophy}
+SEO Insight is built to challenge the current SEO SaaS landscape by providing enterprise-grade scraping and AI analysis in a private, local-first environment. 
+
+\subsection{Architectural Pillars}
+\begin{enumerate}
+    \item \textbf{Local-First Persistence}: Uses SQLite for zero-latency data access.
+    \item \textbf{AI Velocity}: Leverages Groq (Llama 3.3) for sub-second inference.
+    \item \textbf{Visual Excellence}: A premium Apple-inspired design system.
+\end{enumerate}
+
+% ── Section 2: Setup ──────────────────────────────────────────────────
+\section{Setup \& Orchestration}
+The project uses a hybrid setup model to ensure ease of use for developers and robustness for production environments.
+
+\subsection{Automated Setup (setup.py)}
+The Python-based setup wizard handles:
+\begin{itemize}
+    \item Dependency verification (Node.js, pnpm).
+    \item Environment variable validation.
+    \item Automated package installation and dev-server launch.
+\end{itemize}
+
+% ── Section 3: Tech Stack Deep Dive ──────────────────────────────────
+\section{Technical Stack Deep Dive}
+
+\subsection{Frontend: Next.js 15}
+Utilizes Turbopack for near-instant development cycles and Server Components to minimize client-side JavaScript overhead.
+
+\subsection{AI: Groq & Perplexity}
+\begin{itemize}
+    \item \textbf{Groq}: Primary engine for report synthesis and global chat.
+    \item \textbf{Perplexity}: Optional investigator module for deep entity verification and backlink discovery.
+\end{itemize}
+
+\subsection{Scraping: Bright Data}
+Manages the SERP Snapshot lifecycle, bypassing advanced bot detections to provide raw search data.
+
+% ── Section 4: The Analysis Pipeline ─────────────────────────────────
+\section{The Analysis Pipeline (State Machine)}
+The generation of an SEO report follows a strict 6-phase state machine:
+\begin{enumerate}
+    \item \textbf{Trigger}: Prompt ingestion and initial DB job creation.
+    \item \textbf{Scraping}: Snapshot creation and async polling.
+    \item \textbf{Compression}: Trimming raw HTML to essential tokens.
+    \item \textbf{Inference}: AI reasoning using Llama 3.3.
+    \item \textbf{Hardening}: Zod-based data validation and repair.
+    \item \textbf{Persistence}: Final JSON storage and UI state update.
+\end{enumerate}
+
+% ── Section 5: Intelligence Modules ──────────────────────────────────
+\section{Intelligence Modules}
+
+\subsection{Aditya Mode (Developer Mode)}
+Triggered by the phrase "This is Aditya", this mode unlocks the internal architecture knowledge base for the AI, allowing it to assist in project maintenance.
+
+\subsection{Deep Research (Perplexity)}
+An investigative layer that cross-references LinkedIn, GitHub, and professional registries to ensure entity accuracy.
+
+% ── Section 6: Design System ──────────────────────────────────────────
+\section{The Design System}
+The UI is built on a series of professional CSS and React tokens.
+
+\subsection{Visual Tokens}
+\begin{itemize}
+    \item \textbf{Aurora Background}: Floating blurred orbs with motion-driven drift.
+    \item \textbf{Glassmorphism}: 24px blur radius with semi-transparent borders.
+    \item \textbf{Staggered Entrance}: 20ms incremental delays for smoother content delivery.
+\end{itemize}
+
+\subsection{Page Progress}
+A custom gradient loader that simulates organic growth during route transitions, ensuring the UI always feels responsive.
+
+% ── Section 7: Scalability & Security ────────────────────────────────
+\section{Scalability \& Security}
+
+\subsection{Middleware (The Gatekeeper)}
+Currently set to passthrough mode for local development. It is primed to integrate with \textbf{Clerk} for route-level protection in a multi-user environment.
+
+\subsection{Commercial Ready (Pricing)}
+The platform includes a pre-designed pricing structure (\texttt{app/pricing/page.tsx}) ready for Stripe integration.
+
+% ── Section 8: Troubleshooting ──────────────────────────────────────
+\section{Maintenance \& Troubleshooting}
+\begin{itemize}
+    \item \textbf{Rate Limits}: Managed via the \texttt{AnalysisLock} singleton.
+    \item \textbf{Scraping Failures}: Handled via the UI-integrated "Retry" engine.
+    \item \textbf{Cancellation}: Active jobs can be halted using the "Stop Generation" API.
+\end{itemize}
+
+\end{document}
