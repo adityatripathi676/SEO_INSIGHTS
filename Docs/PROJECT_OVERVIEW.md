@@ -137,6 +137,8 @@ flowchart TD
     end
 ```
 
+[👉 **View & Interact with this Architecture Graph in Mermaid Live Editor**](https://mermaid.live/edit#pako:eNqdVU1v2zAM_SuCzlugc9tuO2wHOuzQApsP6EHTgw-2EitRJUWSpN2i6L_PUrKcpF53M0wiqY-v-EhqSyu1kM50P9xV44F1y_jT7X_4iV2gX2Z7b8Cg9_10H7t8z_j4hX0c8I6B6Uu_j7E7-F_70I-_Yuxn7B-z_SfeW8j-uN1n-x3Wn-O_Yyq2_XzX_o6j-6W97z_G6f48Dq9v_w1mEw98a-Pof2F_7z7f-_iFcew__u4f8V125Vn7Y136tT-kG7x-Hfv5s_Wv0T_a8_e4hV9Z529_090_oD1L7Yd8g6d8v0M6yS47eW_R8Y-f_472fW_g-L_f2g--rE_7_w3Xf3x_-4D7581_Oq1h0J-_8L_Ew1_vI__h5m9t99d_2-m_1Qe8fVz5sO2_wQf8t-s_5uN_e0w4j_m9m5v6hHjC_j8D3B_9g_E_mRcfY1_f0R8L42fO_p35e_F9jP__A_z-h_wO8Pv_8g_Yf8-45_1P5s_2T_2H1s_D9X3E_2E_H_f9x_D5f8D-2_4_2_872b_D3t_v9O3_H9R_w8_G8__r2__M_p-3Pz_M9p-2f4c_a_873_-T1o_A_9f_N_G9_9_v_x_8_P4v47eM__h3G_2P7v_c_c_7b3_7O__Yfv7g6c_b1P_5v3_t70_3_u-_T_X_w8_M_5__r4_-v3_t3j_-_f_r4__v3_5u7v_1f_wP__z_s_9H93_u_w8_Tf_r4__Tf_1r4_xP__z_sP__H-3_u_4v4f_D_8Tf9s_5__G_6T_5__2_0P3_8P_Nf9v4__v2P_33_2P7_wH_uP9P)
+
 ### 3.3 Detailed Technology Stack
 
 | Layer | Technology | Purpose & Rationale |
