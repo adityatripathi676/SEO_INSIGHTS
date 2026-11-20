@@ -12,9 +12,9 @@ export async function GET(
     const { id } = await params;
 
     // Try by UUID first, then by snapshot_id (for backward compat with URL routing)
-    let job = getJobById(id);
+    let job = await getJobById(id);
     if (!job) {
-      job = getJobBySnapshotId(id);
+      job = await getJobBySnapshotId(id);
     }
 
     if (!job) {
@@ -37,7 +37,7 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params;
-    deleteJob(id);
+    await deleteJob(id);
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("[Jobs/:id DELETE] Error:", error);

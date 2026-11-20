@@ -6,6 +6,7 @@ import {
   createJob,
   failJob,
   saveRawResults,
+  updateJobStage,
   findCachedJobByPrompt,
   createJobFromCache,
 } from "@/lib/db";
@@ -26,10 +27,10 @@ export async function POST(req: NextRequest) {
     const cleanPrompt = prompt.trim();
 
     // Check for cached completed report within 48h
-    const cachedJob = findCachedJobByPrompt(cleanPrompt);
+    const cachedJob = await findCachedJobByPrompt(cleanPrompt);
     if (cachedJob && cachedJob.seo_report) {
       const cachedJobId = uuidv4();
-      createJobFromCache(cachedJobId, cleanPrompt, cachedJob);
+      await createJobFromCache(cachedJobId, cleanPrompt, cachedJob);
       console.log(`[Scrape] Domain cache hit for "${cleanPrompt}" -> Created job ${cachedJobId}`);
       return NextResponse.json({
         jobId: cachedJobId,
@@ -45,27 +46,30 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Create job record in SQLite
+    // Create job record in local JSON storage
     const jobId = uuidv4();
-    const job = createJob(jobId, cleanPrompt);
+    const job = await createJob(jobId, cleanPrompt);
     console.log(`[Scrape] Created job ${jobId} for prompt: "${cleanPrompt}"`);
 
     // Execute background agentic crawl & analysis
-    // We run the crawl in background and return jobId immediately for real-time polling UI
+    // Runs in the local Node event loop and updates progress in JSON storage
     (async () => {
       try {
         console.log(`[Scrape] Starting agentic crawler pipeline for job ${jobId}...`);
+        await updateJobStage(jobId, "crawling", "running");
+
         const crawlResult = await runFullCrawl(cleanPrompt);
         const formattedResults = formatCrawlResultForAnalysis(crawlResult);
 
-        // Save raw crawl results to SQLite
-        saveRawResults(jobId, formattedResults);
+        // Save raw crawl results
+        await saveRawResults(jobId, formattedResults);
+        await updateJobStage(jobId, "analyzing", "analyzing");
 
         // Run AI analysis with Groq Llama 3.3
         await runAnalysis(jobId, crawlResult);
       } catch (err) {
         console.error(`[Scrape] Agentic crawl pipeline failed for job ${jobId}:`, err);
-        failJob(
+        await failJob(
           jobId,
           err instanceof Error ? err.message : "Agentic crawl failed"
         );

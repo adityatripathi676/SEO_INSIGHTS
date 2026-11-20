@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import mermaid from "mermaid";
-import { v4 as uuidv4 } from 'uuid'; // we need to install uuid or just use a random string
 
 interface MermaidProps {
   chart: string;

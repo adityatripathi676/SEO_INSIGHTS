@@ -98,13 +98,13 @@ export async function runAnalysis(jobId: string, crawlResult?: FullCrawlResult):
   try {
     console.log(`[Analysis] Starting AI analysis for job: ${jobId} (Groq)`);
 
-    const job = getJobById(jobId);
+    const job = await getJobById(jobId);
     if (!job) {
       console.error(`[Analysis] No job found for ID: ${jobId}`);
       return;
     }
     if (!job.results || job.results.length === 0) {
-      failJob(jobId, "No scraping results available for analysis");
+      await failJob(jobId, "No scraping results available for analysis");
       return;
     }
 
@@ -113,7 +113,7 @@ export async function runAnalysis(jobId: string, crawlResult?: FullCrawlResult):
     const prompt   = buildAnalysisPrompt(trimmed as Parameters<typeof buildAnalysisPrompt>[0]);
 
     // Save prompt for debugging
-    saveAnalysisPrompt(jobId, prompt);
+    await saveAnalysisPrompt(jobId, prompt);
 
     console.log(`[Analysis] Sending to AI Engine (${prompt.length} chars) for job: ${jobId}`);
 
@@ -232,13 +232,13 @@ export async function runAnalysis(jobId: string, crawlResult?: FullCrawlResult):
     console.log(`[Analysis] Report generated: ${seoReport.meta?.entity_name || "Unknown"}`);
 
     const validated = seoReportSchema.parse(seoReport);
-    saveSeoReport(jobId, validated);
-    completeJob(jobId);
+    await saveSeoReport(jobId, validated);
+    await completeJob(jobId);
 
     console.log(`[Analysis] Job ${jobId} completed ✓`);
   } catch (error) {
     console.error(`[Analysis] Error for job ${jobId}:`, error);
-    failJob(
+    await failJob(
       jobId,
       error instanceof Error ? error.message : "Unknown analysis error"
     );

@@ -7,7 +7,7 @@ interface MetricCardProps {
   value: string | number;
   change?: string;
   changeType?: "positive" | "negative" | "neutral";
-  icon: any; // Using any to avoid type complaints with different icon packs
+  icon: React.ComponentType<{ className?: string }>;
   description?: string;
 }
 

@@ -70,7 +70,7 @@ export default function ArchitecturePage() {
           minScale={0.2}
           maxScale={4}
           centerOnInit={true}
-          wheel={{ step: 0.05, smoothStep: 0.005 }}
+          wheel={{ step: 0.05 }}
           pinch={{ step: 5 }}
           panning={{ velocityDisabled: false }}
         >

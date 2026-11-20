@@ -40,5 +40,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# local database
+# local database and JSON storage
 /data
+/data/local-storage
+*.backup*

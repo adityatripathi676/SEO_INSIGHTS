@@ -5,7 +5,7 @@ import { getAllJobs, deleteAllJobs } from "@/lib/db";
 
 export async function GET() {
   try {
-    const jobs = getAllJobs();
+    const jobs = await getAllJobs();
     return NextResponse.json(jobs);
   } catch (error) {
     console.error("[Jobs] Error fetching jobs:", error);
@@ -19,7 +19,7 @@ export async function GET() {
 export async function DELETE() {
   try {
     // Only deletes live reports, preserves demo reports
-    deleteAllJobs(true);
+    await deleteAllJobs(true);
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("[Jobs] Error deleting all jobs:", error);

@@ -111,7 +111,7 @@ export async function pollAndProcess(
           console.log(`[BrightData] Snapshot status: ${status}`);
 
           if (status === "failed" || status === "error") {
-            failJob(jobId, `Bright Data snapshot failed with status: ${status}`);
+            await failJob(jobId, `Bright Data snapshot failed with status: ${status}`);
             return;
           }
 
@@ -151,13 +151,13 @@ export async function pollAndProcess(
   }
 
   // Timed out
-  failJob(jobId, `Scraping timed out after ${maxWaitMs / 1000}s`);
+  await failJob(jobId, `Scraping timed out after ${maxWaitMs / 1000}s`);
   console.error(`[BrightData] Polling timed out for job ${jobId}`);
 }
 
 async function processResults(jobId: string, rawData: unknown[]): Promise<void> {
   // Save raw results and set status to analyzing
-  saveRawResults(jobId, rawData);
+  await saveRawResults(jobId, rawData);
   console.log(`[BrightData] Raw data saved for job ${jobId}, starting analysis...`);
 
   // Run AI analysis

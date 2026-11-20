@@ -1,5 +1,5 @@
 // app/api/stats/route.ts
-// GET /api/stats — Live aggregated dashboard metrics from SQLite
+// GET /api/stats — Live aggregated dashboard metrics from storage
 import { NextResponse } from "next/server";
 import { getAllJobs } from "@/lib/db";
 
@@ -25,7 +25,7 @@ const ZERO_STATS: DashboardStats = {
 
 export async function GET() {
   try {
-    const allJobs = getAllJobs();
+    const allJobs = await getAllJobs();
 
     // Exclude demo seed jobs from live stats
     const liveJobs = allJobs.filter(

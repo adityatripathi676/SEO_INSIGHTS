@@ -76,24 +76,22 @@ export function AIChatUpsellCard() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-2">
-              <Button
-                asChild
-                className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-indigo-500/25 transition-all duration-300 hover:scale-105 group px-8 py-6 text-base h-auto"
-              >
-                <Link href="/pricing">
+              <Link href="/pricing">
+                <Button className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-indigo-500/25 transition-all duration-300 hover:scale-105 group px-8 py-6 text-base h-auto">
                   <Zap className="h-5 w-5 mr-2 group-hover:rotate-12 transition-transform duration-300" />
                   Upgrade to Pro
                   <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-                </Link>
-              </Button>
+                </Button>
+              </Link>
 
-              <Button
-                variant="outline"
-                asChild
-                className="border-indigo-200 dark:border-indigo-800 hover:bg-indigo-50 dark:hover:bg-indigo-950 hover:border-indigo-300 dark:hover:border-indigo-700 transition-all duration-300 px-8 py-6 text-base h-auto"
-              >
-                <Link href="/pricing">View Plans</Link>
-              </Button>
+              <Link href="/pricing">
+                <Button
+                  variant="outline"
+                  className="border-indigo-200 dark:border-indigo-800 hover:bg-indigo-50 dark:hover:bg-indigo-950 hover:border-indigo-300 dark:hover:border-indigo-700 transition-all duration-300 px-8 py-6 text-base h-auto"
+                >
+                  View Plans
+                </Button>
+              </Link>
             </div>
           </div>
 

@@ -9,13 +9,13 @@ export async function POST(
   const { id } = await params;
 
   try {
-    const job = getJobById(id);
+    const job = await getJobById(id);
     if (!job) {
       return NextResponse.json({ error: "Job not found" }, { status: 404 });
     }
 
     // Mark as failed with "Cancelled by user" message
-    failJob(id, "Cancelled by user");
+    await failJob(id, "Cancelled by user");
 
     return NextResponse.json({ success: true });
   } catch (error) {

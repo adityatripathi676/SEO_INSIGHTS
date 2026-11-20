@@ -1,7 +1,7 @@
 // app/api/chat/route.ts
 // POST /api/chat — Streaming AI chat using Groq (Llama 3.3)
 import { createOpenAI } from "@ai-sdk/openai";
-import { streamText, UIMessage, convertToModelMessages } from "ai";
+import { streamText, UIMessage } from "ai";
 import { getJobById, getJobBySnapshotId } from "@/lib/db";
 
 const groq = createOpenAI({
@@ -62,8 +62,8 @@ Greeting: "Hello Aditya! I've activated Project Insight mode. I'm ready to answe
     // ─── REPORT CONTEXT: Inject report data if available ──────────────────────
     if (id && !isAditya) {
       try {
-        let job = getJobById(id);
-        if (!job) job = getJobBySnapshotId(id);
+        let job = await getJobById(id);
+        if (!job) job = await getJobBySnapshotId(id);
 
         if (job?.seo_report) {
           const report = job.seo_report as Record<string, unknown>;
@@ -101,7 +101,7 @@ Keep answers concise and actionable. If asked about something not in the data, s
       });
       if (res.ok) {
         const data = await res.json();
-        const models = data.data.map((m: any) => m.id).filter((id: string) => !id.includes("whisper") && !id.includes("guard"));
+        const models = (data.data as Array<{ id: string }>).map((m) => m.id).filter((id: string) => !id.includes("whisper") && !id.includes("guard"));
         if (models.length > 0) {
           // Prefer Llama, then Qwen, then anything
           selectedModel = models.find((m: string) => m.includes("llama")) || 
@@ -110,14 +110,14 @@ Keep answers concise and actionable. If asked about something not in the data, s
           console.log(`[Chat] Selected Groq model: ${selectedModel}`);
         }
       }
-    } catch (e) {
+    } catch {
       console.warn("[Chat] Failed to discover Groq models, using default.");
     }
 
     // Format conversation history to bypass Groq provider serialization issues
     // by collapsing the history into a single user message.
     const historyString = messages.map(m => {
-      const text = m.parts?.filter((p): p is { type: "text"; text: string } => p.type === "text").map(p => p.text).join("") || m.content || "";
+      const text = m.parts?.filter((p): p is { type: "text"; text: string } => p.type === "text").map(p => p.text).join("") || (m as unknown as { content?: string }).content || "";
       return `${m.role === 'user' ? 'User' : 'Assistant'}: ${text}`;
     }).join("\n\n");
 
@@ -127,7 +127,6 @@ Keep answers concise and actionable. If asked about something not in the data, s
         { role: 'user', content: historyString }
       ],
       system: systemPrompt,
-      maxTokens: 500,
     });
 
     return result.toUIMessageStreamResponse();

@@ -1,6 +1,6 @@
 // app/api/demo/route.ts
-// POST /api/demo — Seeds a pre-built demo SEO report into the local SQLite DB.
-// No API calls to Bright Data or Gemini — instant result for demos.
+// POST /api/demo — Seeds a pre-built demo SEO report into local JSON storage.
+// No external API calls — instant result for demos.
 import { NextResponse } from "next/server";
 import { v4 as uuidv4 } from "uuid";
 import { createJob, saveSeoReport, saveRawResults, completeJob, getAllJobs, deleteJob } from "@/lib/db";
@@ -9,20 +9,20 @@ import { DEMO_REPORT } from "@/lib/demo-report";
 export async function POST() {
   try {
     // Remove any existing demo jobs to keep dashboard clean
-    const existing = getAllJobs();
+    const existing = await getAllJobs();
     for (const job of existing) {
       if (job.original_prompt.startsWith("[DEMO]")) {
-        deleteJob(job.id);
+        await deleteJob(job.id);
       }
     }
 
     const jobId = uuidv4();
 
     // Create the job record
-    createJob(jobId, "[DEMO] Google — SEO Analysis Demo");
+    await createJob(jobId, "[DEMO] Google — SEO Analysis Demo");
 
     // Inject mock raw results so "retry analysis" also works
-    saveRawResults(jobId, [
+    await saveRawResults(jobId, [
       {
         prompt: "Comprehensive SEO analysis of Google",
         answer_text: "Google is the world's most visited website and dominant search engine...",
@@ -33,8 +33,8 @@ export async function POST() {
     ]);
 
     // Inject the pre-built report and mark complete
-    saveSeoReport(jobId, DEMO_REPORT);
-    completeJob(jobId);
+    await saveSeoReport(jobId, DEMO_REPORT);
+    await completeJob(jobId);
 
     return NextResponse.json({ jobId, message: "Demo report created" });
   } catch (error) {
